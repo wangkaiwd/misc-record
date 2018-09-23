@@ -76,7 +76,7 @@ class Life extends Component {
     return (
       <div className="content">
         <h2>react生命周期</h2>
-        <p onClick={this.handleAdd}><Button type="primary">加1</Button></p>
+        <p onClick={this.handleAdd}><Button type="danger">加1</Button></p>
         <p onClick={this.handleClick.bind(this)}><button>加1</button></p>
         <h1>{this.state.count}</h1>
         <Child name={this.state.count}></Child>

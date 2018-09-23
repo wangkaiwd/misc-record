@@ -182,9 +182,10 @@ module.exports = {
               },
               {
                 loader: require.resolve('less-loader'),
+                // 更改主题
                 options: {
                   modifyVars: {
-                    'primary-color': '#1DA57A',
+                    'primary-color': '#1890ff',
                   },
                   javascriptEnabled: true,
                 },
