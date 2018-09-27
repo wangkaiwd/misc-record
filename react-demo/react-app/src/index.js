@@ -1,9 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-// import App from './App';
-import Life from './pages/Life.js'
-import registerServiceWorker from './registerServiceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { HashRouter as Router } from 'react-router-dom'
+import Admin from './admin'
+import registerServiceWorker from './registerServiceWorker'
+import 'styles/reset.less'
+import 'styles/container.less'
 
-ReactDOM.render(<Life />, document.getElementById('root'));
-registerServiceWorker();
+ReactDOM.render(<Router><Admin/></Router>, document.getElementById('root'))
+registerServiceWorker()
