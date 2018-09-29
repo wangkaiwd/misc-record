@@ -3,6 +3,7 @@
 * `legend`:  ['ledʒ(ə)nd]  传奇；说明；图例；刻印文字
 * `geometry`:  [dʒɪ'ɒmɪtrɪ] 几何学，几何结构，几何
 * `coordinate`: [kəʊ'ɔ:dɪneɪt] n. **坐标** adj. 并列的，同等的，v. 调整，整合，协调
+* `label`: n.标签，符号
 
 ### `others`
 * 更新数据
