@@ -4,8 +4,10 @@ function resolve(dir) {
 }
 module.exports = {
 	chainWebpack: config => {
-		config.resolve.alias
-			.set('@', resolve('src'))
+		config.resolve.extensions
+			.merge(['.js', '.scss', '.vue', '.json'])
+			.end()
+			.alias.set('@', resolve('src'))
 			.set('styles', resolve('src/assets/styles'))
 			.set('components', resolve('src/components'))
 			.set('views', resolve('src/views'))

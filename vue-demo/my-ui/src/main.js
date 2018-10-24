@@ -3,6 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './registerServiceWorker'
+import Toast from 'components/myToast/toast'
+
+import 'styles/reset'
+
+Vue.use(Toast)
 
 Vue.config.productionTip = false
 
