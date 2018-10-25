@@ -1,6 +1,6 @@
 <template>
   <div class="my-toast">
-    MyToast
+    <slot></slot>
   </div>
 </template>
 
@@ -19,5 +19,11 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+.my-toast {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+}
 </style>
