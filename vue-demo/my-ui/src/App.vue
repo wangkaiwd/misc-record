@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <button @click="handleClick()">点击</button>
+    <button @click="handleClick">上</button>
+    <button @click="handleClick1">中</button>
+    <button @click="handleClick2">下</button>
   </div>
 </template>
 <script>
@@ -9,28 +11,32 @@
     data () {
       return {}
     },
-    mounted () {
-      this.$message('很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字很多文字', {
-        autoClose: false,
-        closeDelay: 3000,
-        closeButton: {
-          text: '确定',
-          cb (data) {
-            // 关闭回调触发
-            // console.log(data)
-          }
-        }
-      })
-    },
     methods: {
       handleClick () {
-        this.$message('I am toast')
+        this.$message('你的智商需要充值', {
+          closeButton: {text: '已充值'}
+        })
       },
+      handleClick1 () {
+        this.$message('你的智商需要充值', {
+          position: 'middle',
+          closeButton: {text: '已充值'}
+        })
+      },
+      handleClick2 () {
+        this.$message('你的智商需要充值', {
+          position: 'bottom',
+          closeButton: {text: '已充值'}
+        })
+      }
     }
   }
 </script>
 
 <style lang="scss" scoped>
   #app {
+    button {
+      margin: 10px;
+    }
   }
 </style>

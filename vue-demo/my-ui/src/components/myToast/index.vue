@@ -1,6 +1,5 @@
 <template>
-  <!-- <div class="my-toast" ref="myToast"> -->
-  <div class="my-toast" ref="myToast">
+  <div class="my-toast" :class="position" ref="myToast">
     <div class="toast-content">
       <slot></slot>
     </div>
@@ -16,15 +15,17 @@
 </template>
 
 <script>
-  // api设计：
-  // 1. open : 通过调用vue实例上的方法来展示toast
-  // 2. close
-  // 2. position 3. autoClose 4. autoCloseTime 5. close
-  // import Vue from 'vue'
-  // 侵入性太强
-  // Vue.prototype.$toast = function() {
-  // 	console.log('我是toast')
-  // }
+  // toast问题总结：
+  //  1. api设计：
+  //      a. open: 如何让toast出现（调用方法）
+  //      b. 如何进行参数传入？(先通过掉用函数传入，之后构造实例的时候通过propsData来进行传入)
+  //      c. 传入的内容是对象的时候，要在给定默认值和使用的时候进行非空判断，防止出错
+  //  2. 使用install方法编写插件，通过Vue.use()方法使用插件（通过工程问题解释了为什么）
+  //  3. 为什么要将toast加入body中？以及如何加入（细节：传参;将提示文字传入slot中）
+  //  4. 样式注意问题：
+  //      a. 左边线为什么要通过js实现
+  //      b. 右侧关闭按钮在左侧内容变多的时候会缩小，要设置: flex-shrink: 0;
+  //         flex 默认会缩小，不会放大
 
   export default {
     name: 'MyToast',
@@ -41,6 +42,13 @@
       closeButton: {
         type: Object,
         required: false
+      },
+      position: {
+        type: String,
+        default: 'top',
+        validator (val) {
+          return ['top', 'bottom', 'middle'].includes(val)
+        }
       }
     },
     mounted () {
@@ -68,7 +76,7 @@
       },
       onClickClose () {
         this.close()
-        if (this.closeButton) {
+        if (this.closeButton && typeof this.closeButton.cb === 'function') {
           this.closeButton.cb(this)
         }
       },
@@ -99,9 +107,7 @@
   $white: #fff;
   .my-toast {
     position: fixed;
-    top: 0;
     left: 50%;
-    transform: translateX(-50%);
     line-height: 1.8;
     border-radius: $border-radius;
     box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
@@ -110,22 +116,34 @@
     background-color: $toast-bg;
     color: $white;
     padding: 6px 16px;
+    transform: translateX(-50%);
+    transition: all 1s;
+    @keyframes animateTop {
+      0% {
+        transform: translate(-50%, -100%);
+      }
+      100% {
+        transform: translate(-50%, 0);
+      }
+    }
+    @keyframes animateBottom {
+      0% {
+        transform: translate(-50%, 100%);
+      }
+      100% {
+        transform: translate(-50%, 0);
+      }
+    }
+    &.top {top: 0;transform: translate(-50%, 0);animation: animateTop .3s;}
+    &.bottom {bottom: 0;transform: translate(-50%, 0);animation: animateBottom .3s;}
+    &.middle {top: 50%;transform: translate(-50%, -50%);}
     .line {
-      position: absolute;
-      top: 0;
-      right: 0;
-      padding-left: 16px;
-      border-left: 2px solid #666;
+      position: absolute;top: 0;
+      right: 0;padding-left: 16px;border-left: 2px solid #666;
     }
     .toast-button {
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      padding-left: 16px;
-      margin-left: 16px;
-      flex-shrink: 0;
+      cursor: pointer;display: inline-flex;align-items: center;justify-content: center;
+      height: 100%;padding-left: 16px;margin-left: 16px;flex-shrink: 0;
     }
   }
 </style>

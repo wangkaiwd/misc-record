@@ -1,12 +1,14 @@
 import Toast from './index'
 
+let currentToast
 const install = Vue => {
   Vue.prototype.$message = function (message, options) {
     // 在调用的时候已经为appendBody赋值了
-    appendBody(Vue, message, options)
+    if (currentToast) currentToast.close()
+    currentToast = createToast(Vue, message, options)
   }
 }
-const appendBody = (Vue, message, options) => {
+const createToast = (Vue, message, options) => {
   // Vue.extend:使用基础Vue构造器，创建一个子类。参数是一个包含组件选项的对象
   // 注意：在Vue.extend()中data选项必须是函数
   const Constructor = Vue.extend(Toast)
@@ -21,6 +23,7 @@ const appendBody = (Vue, message, options) => {
   toast.$mount()
   // vm.$el: Vue实例使用的根dom元素
   document.querySelector('body').appendChild(toast.$el)
+  return toast
 }
 
 export default {
